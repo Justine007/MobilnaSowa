@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ImageBackground, Button, TextInput, Image, View} from 'react-native';
-import { StackNavigator, NavigationScreenProp } from 'react-navigation'
+import {StyleSheet, Text, ImageBackground, Button, TextInput, View} from 'react-native';
+import { NavigationScreenProp } from 'react-navigation'
 
 interface AuthState {
     username: string,
     password: string
 }
 interface AuthProps {
-    navigation: NavigationScreenProp<any, any>;
+    navigation: NavigationScreenProp<any, any>
 }
 
 export default class AuthComponent extends Component<AuthProps, AuthState>{
@@ -18,10 +18,6 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
             username: '',
             password: ''
         }
-    }
-
-    componentDidMount () {
-        console.log('mount auth')
     }
     onButtonPress = () => {
         this.checkIfUserExists()
@@ -45,9 +41,10 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
                     ["AccountCheck", [this.state.username]]
                 ]
             }),
-        }).then((response) => {
+        })
+        .then((response) => {
             if(!response.ok)
-                throw new Error('Network response was not ok.');
+                throw new Error('Network response was not ok.')
 
             return response.json()
         })
@@ -80,41 +77,42 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
                     ["AccountAuth", [this.state.username, this.state.password]]
                 ]
             }),
-        }).then((response) => {
+        })
+        .then((response) => {
             if(!response.ok)
-                throw new Error('Network response was not ok.');
+                throw new Error('Network response was not ok.')
 
             return response.json()
         })
-            .then((responseJson) => {
-                if (responseJson[0].status === 200) {
-                    this.props.navigation.navigate('Second')
-                }
-                else
-                    alert('Zły login lub hasło')
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        .then((responseJson) => {
+            if (responseJson[0].status === 200) {
+                this.props.navigation.navigate('Second')
+            }
+            else
+                alert('Zły login lub hasło')
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     render() {
         return (
-        <ImageBackground style={styles.background} source={require('../assets/images/psw-bg.jpg')}>
-            <View style={styles.container}>
-                <View style={styles.textContainer}>
-                    <Text style={[styles.textStyle, styles.textCenter, styles.textBold]}>Zaloguj się</Text>
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput onChangeText={(username) => this.setState({username})} style={styles.input} placeholder='Adres Email'/>
-                    <TextInput secureTextEntry={true} onChangeText={(password) => this.setState({password})} style={styles.input} placeholder='Hasło'/>
-                    <View style={styles.buttonStyle}>
-                        <Button color={'#fff'} title={'Zaloguj'} onPress={this.onButtonPress}></Button>
+            <ImageBackground style={styles.background} source={require('../assets/images/psw-bg.jpg')}>
+                <View style={styles.container}>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.textStyle, styles.textCenter, styles.textBold]}>Zaloguj się</Text>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <TextInput onChangeText={(username) => this.setState({username})} style={styles.input} placeholder='Adres Email'/>
+                        <TextInput secureTextEntry={true} onChangeText={(password) => this.setState({password})} style={styles.input} placeholder='Hasło'/>
+                        <View style={styles.buttonStyle}>
+                            <Button color={'#fff'} title={'Zaloguj'} onPress={this.onButtonPress}></Button>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </ImageBackground>
-    );
+            </ImageBackground>
+        )
     }
 }
 
@@ -130,11 +128,6 @@ const styles = StyleSheet.create({
         borderColor: '#36a0ec',
         borderRadius: 5,
         backgroundColor: '#fff'
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
     },
     inputContainer: {
         width: '100%',

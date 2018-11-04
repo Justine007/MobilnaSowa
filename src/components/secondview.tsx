@@ -14,9 +14,9 @@ export default class SecondView extends Component<AuthProps, AuthState>{
 
     render() {
         return (
-        <View>
-            <Text>Drugi view</Text>
-        </View>
-    );
+            <View>
+                <Text>Drugi view</Text>
+            </View>
+        )
     }
 }
