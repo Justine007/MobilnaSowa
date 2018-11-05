@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, ImageBackground, Button, TextInput, View} from 'react-native';
 import { NavigationScreenProp } from 'react-navigation'
-
+// import {withTranslation, IWithTranslationProps} from "../Services/Translate/WithTranslate";
+import { IWithTranslationProps, withTranslation } from '../Services/Translate/WithTranslate'
 interface AuthState {
     username: string,
     password: string
 }
 interface AuthProps {
     navigation: NavigationScreenProp<any, any>
+    lang: IWithTranslationProps
 }
 
+
+@withTranslation()
 export default class AuthComponent extends Component<AuthProps, AuthState>{
     constructor(props : AuthProps) {
         super(props)
@@ -19,7 +23,7 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
             password: ''
         }
     }
-    onButtonPress = () => {
+    onButtonPressed = () => {
         this.checkIfUserExists()
     }
 
@@ -107,7 +111,7 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
                         <TextInput onChangeText={(username) => this.setState({username})} style={styles.input} placeholder='Adres Email'/>
                         <TextInput secureTextEntry={true} onChangeText={(password) => this.setState({password})} style={styles.input} placeholder='Hasło'/>
                         <View style={styles.buttonStyle}>
-                            <Button color={'#fff'} title={'Zaloguj'} onPress={this.onButtonPress}></Button>
+                            <Button color={'#fff'} title={'Zaloguj'} onPress={this.onButtonPressed}></Button>
                         </View>
                     </View>
                 </View>
