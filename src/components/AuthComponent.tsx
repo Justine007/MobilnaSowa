@@ -2,105 +2,101 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, ImageBackground, Button, TextInput, View} from 'react-native';
 import { NavigationScreenProp } from 'react-navigation'
 // import {withTranslation, IWithTranslationProps} from "../Services/Translate/WithTranslate";
-import { IWithTranslationProps, withTranslation } from '../Services/Translate/WithTranslate'
+import withTranslation, {IWithTranslationProps,} from '../Services/Translate/WithTranslate'
+
+
+
 interface AuthState {
-    username: string,
-    password: string
-}
-interface AuthProps {
-    navigation: NavigationScreenProp<any, any>
-    lang: IWithTranslationProps
 }
 
+interface AuthProps extends IWithTranslationProps{
+    lang?: any,
+}
 
 @withTranslation()
-export default class AuthComponent extends Component<AuthProps, AuthState>{
+export default class AuthComponent extends React.Component<AuthProps, AuthState>{
     constructor(props : AuthProps) {
         super(props)
-
-        this.state = {
-            username: '',
-            password: ''
-        }
     }
-    onButtonPressed = () => {
-        this.checkIfUserExists()
-    }
-
-    checkIfUserExists = () => {
-        fetch('http://testsowa.pswbp.pl/capi.php', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "auth": [
-                    1,
-                    "urn:uuid:4dd12e7a-7572-4829-b0fe-e13fef752fda",
-                    "#iqvbW!JhHch+TW._(+z",
-                    "42699@lic528.sowa"
-                ],
-                "exec": [
-                    ["AccountCheck", [this.state.username]]
-                ]
-            }),
-        })
-        .then((response) => {
-            if(!response.ok)
-                throw new Error('Network response was not ok.')
-
-            return response.json()
-        })
-        .then((responseJson) => {
-            if (responseJson[0].status === 200)
-                this.loginUser()
-            else
-                alert('Zly login lub hasło')
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
-
-    loginUser = () => {
-        fetch('http://testsowa.pswbp.pl/capi.php', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "auth": [
-                    1,
-                    "urn:uuid:4dd12e7a-7572-4829-b0fe-e13fef752fda",
-                    "#iqvbW!JhHch+TW._(+z",
-                    "42699@lic528.sowa"
-                ],
-                "exec": [
-                    ["AccountAuth", [this.state.username, this.state.password]]
-                ]
-            }),
-        })
-        .then((response) => {
-            if(!response.ok)
-                throw new Error('Network response was not ok.')
-
-            return response.json()
-        })
-        .then((responseJson) => {
-            if (responseJson[0].status === 200) {
-                this.props.navigation.navigate('Second')
-            }
-            else
-                alert('Zły login lub hasło')
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
+    // onButtonPressed = () => {
+    //     this.checkIfUserExists()
+    // }
+    //
+    // checkIfUserExists = () => {
+    //     fetch('http://testsowa.pswbp.pl/capi.php', {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             "auth": [
+    //                 1,
+    //                 "urn:uuid:4dd12e7a-7572-4829-b0fe-e13fef752fda",
+    //                 "#iqvbW!JhHch+TW._(+z",
+    //                 "42699@lic528.sowa"
+    //             ],
+    //             "exec": [
+    //                 ["AccountCheck", [this.state.username]]
+    //             ]
+    //         }),
+    //     })
+    //     .then((response) => {
+    //         if(!response.ok)
+    //             throw new Error('Network response was not ok.')
+    //
+    //         return response.json()
+    //     })
+    //     .then((responseJson) => {
+    //         if (responseJson[0].status === 200)
+    //             this.loginUser()
+    //         else
+    //             alert('Zly login lub hasło')
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //     })
+    // }
+    //
+    // loginUser = () => {
+    //     fetch('http://testsowa.pswbp.pl/capi.php', {
+    //         method: 'POST',
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             "auth": [
+    //                 1,
+    //                 "urn:uuid:4dd12e7a-7572-4829-b0fe-e13fef752fda",
+    //                 "#iqvbW!JhHch+TW._(+z",
+    //                 "42699@lic528.sowa"
+    //             ],
+    //             "exec": [
+    //                 ["AccountAuth", [this.state.username, this.state.password]]
+    //             ]
+    //         }),
+    //     })
+    //     .then((response) => {
+    //         if(!response.ok)
+    //             throw new Error('Network response was not ok.')
+    //
+    //         return response.json()
+    //     })
+    //     .then((responseJson) => {
+    //         if (responseJson[0].status === 200) {
+    //             this.props.navigation.navigate('Second')
+    //         }
+    //         else
+    //             alert('Zły login lub hasło')
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //     })
+    // }
 
     render() {
+        let { lang } = this.props
         return (
             <ImageBackground style={styles.background} source={require('../assets/images/psw-bg.jpg')}>
                 <View style={styles.container}>
@@ -111,7 +107,7 @@ export default class AuthComponent extends Component<AuthProps, AuthState>{
                         <TextInput onChangeText={(username) => this.setState({username})} style={styles.input} placeholder='Adres Email'/>
                         <TextInput secureTextEntry={true} onChangeText={(password) => this.setState({password})} style={styles.input} placeholder='Hasło'/>
                         <View style={styles.buttonStyle}>
-                            <Button color={'#fff'} title={'Zaloguj'} onPress={this.onButtonPressed}></Button>
+                            <Button color={'#fff'} title={lang.login} onPress={() => { console.log('asd')}}></Button>
                         </View>
                     </View>
                 </View>

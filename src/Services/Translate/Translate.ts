@@ -1,7 +1,12 @@
 export const languages: { [key: string]: any } = {
     pl: {
         authcomponent: {
-            login: 'Zaloguj'
+            login: 'zaloguj'
+        }
+    },
+    en_US: {
+        authcomponent: {
+            login: 'login'
         }
     }
 }
