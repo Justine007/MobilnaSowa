@@ -33,7 +33,7 @@ export const session = (state? : StoreState.Session, action? : any) => {
     }
 }
 
-export const lang = (state? : StoreState.Language, action? : any) => {
+export const lang = (state : StoreState.Language, action : any) => {
     if (!state) {
         return initStateLang();
     }

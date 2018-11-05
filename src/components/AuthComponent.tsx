@@ -10,7 +10,6 @@ interface AuthState {
 }
 
 interface AuthProps extends IWithTranslationProps{
-    lang?: any,
 }
 
 @withTranslation()

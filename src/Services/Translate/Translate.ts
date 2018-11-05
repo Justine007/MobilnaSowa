@@ -1,5 +1,5 @@
 export const languages: { [key: string]: any } = {
-    pl: {
+    pl_PL: {
         authcomponent: {
             login: 'zaloguj'
         }

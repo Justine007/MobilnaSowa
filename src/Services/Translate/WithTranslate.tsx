@@ -1,10 +1,9 @@
 import * as React from "react";
-import { NativeModules, Platform } from 'react-native'
-import {languages} from "./Translate";
 import {connect} from "react-redux";
+import {languages} from "./Translate";
 
 export interface IWithTranslationProps{
-    lang? : any
+    lang : any
 }
 
 function getDisplayName(WrappedComponent : any){
@@ -22,7 +21,7 @@ export default function withTranslation<P>(){
             render(){
                 let {lang, ...rest} = this.props as any;
                 let componentName = getDisplayName(InnerComponent)
-                return <InnerComponent lang={lang[componentName]} {...rest}/>
+                return <InnerComponent lang={languages[lang][componentName]} {...rest}/>
             }
         }
         // @ts-ignore
